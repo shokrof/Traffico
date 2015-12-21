@@ -4,5 +4,5 @@ GOOGLE_API_KEY=
 
 # If you need Exception Notifier 
 # I am using BugSnag. First, Create account on BugSag and provide your api key
-Exception_Notifier=
+# If you don't leave it blank
 Exception_Notifier_api_key=
