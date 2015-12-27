@@ -12,7 +12,7 @@ def datetimeToJson(d):
 class Engine:
     def __init__(self,DataBaseConnector):
         self.DataBaseConnector=DataBaseConnector
-        self.SleepTime=36
+        self.SleepTime=1800
         self.Crawlers=[]
         self.startTime=datetime.datetime.now()
     def addCrawler(self,Crawler):
