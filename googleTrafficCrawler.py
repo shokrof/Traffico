@@ -8,21 +8,24 @@ class googleTrafficCrawler(Crawler):
         self.name='googleTrafficCrawler'
     def parseJson(self,j):
         resRawJson=json.loads(j)
-        resJson={}
-        resJson['summary']=resRawJson['routes'][0]['summary']
-        resJson['duration']=resRawJson['routes'][0]['legs'][0]['duration']['value']
-        resJson['distance']=resRawJson['routes'][0]['legs'][0]['distance']['value']
-        resJson['steps']=[]
-        for step in resRawJson['routes'][0]['legs'][0]['steps']:
-            stepJson={}
-            stepJson['distance']=step['distance']['value']
-            stepJson['duration']=step['duration']['value']
-            stepJson['summary']=step['html_instructions']
-            resJson['steps'].append(stepJson)
+        resJson={"routes":[]}
+        for route in resRawJson['routes']:
+            restmpJson={}
+            restmpJson['summary']=route['summary']
+            restmpJson['duration']=route['legs'][0]['duration_in_traffic']['value']
+            restmpJson['distance']=route['legs'][0]['distance']['value']
+            restmpJson['steps']=[]
+            for step in route['legs'][0]['steps']:
+                stepJson={}
+                stepJson['distance']=step['distance']['value']
+                stepJson['duration']=step['duration']['value']
+                stepJson['summary']=step['html_instructions']
+                restmpJson['steps'].append(stepJson)
+            resJson["routes"].append(restmpJson)
         return resJson
         
     def fetch(self):
-        base="https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s"
+        base="https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s&departure_time=now&alternatives=true"
         url1=base%(self.location1,self.location2,self.api_key)
         url2=base%(self.location2,self.location1,self.api_key)
         res1=requests.get(url1)

@@ -21,6 +21,6 @@ def main(argv):
         Curr_Engine.run()
     except Exception as e:
         map(lambda x:x.notify(e),Notifiers)
-
+        print e
 if __name__ == "__main__":
     main(sys.argv[1:])
